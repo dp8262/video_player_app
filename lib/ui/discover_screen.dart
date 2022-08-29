@@ -304,6 +304,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
             ),
           ],
         ),
+
       ),
     );
   }
