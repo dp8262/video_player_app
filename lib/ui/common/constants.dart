@@ -15,6 +15,10 @@ abstract class AllColors {
   static const Color blackColor = Color(0xff0b0a11);
   static const Color greyColor = Color(0xffB9C4C4);
   static const Color greyLightColor = Color(0xff90939d);
+  static const Color primaryColor = Color(0xffedd3cb);
+//Color primaryColor = Colors.blue[100];
+//Color darkPrimaryColor = Colors.blue[800];
+  static const Color darkPrimaryColor = Color(0xff6f3d2e);
   static const Color blueLightColor = Color(0xff6b5ecc);
 }
 

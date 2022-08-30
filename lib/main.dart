@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:video_player_app/audio_player/audio_player_screen.dart';
 import 'package:video_player_app/ui/discover_screen.dart';
 import 'package:video_player_app/ui/tabbar_screen.dart';
 import 'package:video_player_app/ui/video_player.dart';
@@ -36,7 +37,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       // home: const VideoPlayerScreen(),
-      home: const TabBarScreen(),
+      // home: const TabBarScreen(),
+      home: const AudioPlayerScreen(),
     );
   }
 }

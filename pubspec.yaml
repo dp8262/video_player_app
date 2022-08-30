@@ -37,7 +37,14 @@ dependencies:
   video_player: ^2.4.6
   dotted_border: ^2.0.0+2
   image_picker: 0.8.4+11
-
+  #just_audio
+  just_audio: ^0.9.28
+  audio_session: ^0.1.7
+  rxdart: '^0.27.0'
+  just_audio_mpv: ^0.1.4
+  just_audio_windows: ^0.1.0
+  #audio_player:
+  audioplayers: ^1.0.1
 
 
 
