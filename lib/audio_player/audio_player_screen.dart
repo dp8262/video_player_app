@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:video_player_app/audio_player/common/common_widget.dart';
-
+import 'package:video_player_app/ui/common/constants.dart';
 
 class AudioPlayerScreen extends StatefulWidget {
   const AudioPlayerScreen({Key? key}) : super(key: key);
@@ -29,13 +29,12 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> with WidgetsBindi
   Future<void> _init() async {
     final session = await AudioSession.instance;
     await session.configure(const AudioSessionConfiguration.speech());
-    _player.playbackEventStream.listen((event) {},
-        onError: (Object e, StackTrace stackTrace) {
-          print('A stream error occurred: $e');
-        });
+    _player.playbackEventStream.listen((event) {}, onError: (Object e, StackTrace stackTrace) {
+      print('A stream error occurred: $e');
+    });
     try {
-      await _player.setAudioSource(AudioSource.uri(Uri.parse(
-          "https://s3.amazonaws.com/scifri-episodes/scifri20181123-episode.mp3")));
+      await _player.setAudioSource(AudioSource.uri(Uri.parse("https://s3.amazonaws.com/scifri-episodes/scifri20181123-episode.mp3")));
+      await _player.seek(const Duration(seconds: 10));
     } catch (e) {
       print("Error loading audio source: $e");
     }
@@ -56,41 +55,33 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> with WidgetsBindi
     }
   }
 
-  Stream<PositionData> get _positionDataStream =>
-      Rx.combineLatest3<Duration, Duration, Duration?, PositionData>(
-          _player.positionStream,
-          _player.bufferedPositionStream,
-          _player.durationStream,
-              (position, bufferedPosition, duration) => PositionData(
-              position, bufferedPosition, duration ?? Duration.zero));
-
+  Stream<PositionData> get _positionDataStream => Rx.combineLatest3<Duration, Duration, Duration?, PositionData>(
+      _player.positionStream,
+      _player.bufferedPositionStream,
+      _player.durationStream,
+      (position, bufferedPosition, duration) => PositionData(position, bufferedPosition, duration ?? Duration.zero));
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ControlButtons(_player),
-                StreamBuilder<PositionData>(
-                stream: _positionDataStream,
-                builder: (context, snapshot) {
-                  final positionData = snapshot.data;
-                  return SeekBar(
-                    duration: positionData?.duration ?? Duration.zero,
-                    position: positionData?.position ?? Duration.zero,
-                    bufferedPosition:
-                    positionData?.bufferedPosition ?? Duration.zero,
-                    onChangeEnd: _player.seek,
-                  );
-                },
-              ),
-            ],
-          ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        StreamBuilder<PositionData>(
+          stream: _positionDataStream,
+          builder: (context, snapshot) {
+            final positionData = snapshot.data;
+            return SeekBar(
+              duration: positionData?.duration ?? Duration.zero,
+              position: positionData?.position ?? Duration.zero,
+              bufferedPosition: positionData?.bufferedPosition ?? Duration.zero,
+              onChangeEnd: _player.seek,
+            );
+          },
         ),
-      );
+        ControlButtons(_player),
+      ],
+    );
   }
 }
 
@@ -126,29 +117,43 @@ class ControlButtons extends StatelessWidget {
             final playerState = snapshot.data;
             final processingState = playerState?.processingState;
             final playing = playerState?.playing;
-            if (processingState == ProcessingState.loading ||
-                processingState == ProcessingState.buffering) {
+            if (processingState == ProcessingState.loading || processingState == ProcessingState.buffering) {
               return Container(
                 margin: const EdgeInsets.all(8.0),
-                width: 64.0,
-                height: 64.0,
-                child: const CircularProgressIndicator(),
+                width: 40.0,
+                height: 40.0,
+                child: const CircularProgressIndicator(
+                  color: AllColors.blackColor,
+                ),
               );
             } else if (playing != true) {
-              return IconButton(
-                icon: const Icon(Icons.play_arrow),
-                iconSize: 64.0,
-                onPressed: player.play,
+              return CircleAvatar(
+                backgroundColor: AllColors.blackColor,
+                radius: 20,
+                child: IconButton(
+                  icon: const Icon(Icons.play_arrow),
+                  iconSize: 20,
+                  color: AllColors.whiteColor,
+                  onPressed: player.play,
+                ),
               );
             } else if (processingState != ProcessingState.completed) {
-              return IconButton(
-                icon: const Icon(Icons.pause),
-                iconSize: 64.0,
-                onPressed: player.pause,
+              return CircleAvatar(
+                backgroundColor: AllColors.blackColor,
+                radius: 20,
+                child: IconButton(
+                  icon: const Icon(Icons.pause),
+                  iconSize: 20,
+                  color: AllColors.whiteColor,
+                  onPressed: player.pause,
+                ),
               );
             } else {
               return IconButton(
-                icon: const Icon(Icons.replay),
+                icon: const Icon(
+                  Icons.replay,
+                  color: AllColors.blackColor,
+                ),
                 iconSize: 64.0,
                 onPressed: () => player.seek(Duration.zero),
               );
@@ -159,8 +164,7 @@ class ControlButtons extends StatelessWidget {
         StreamBuilder<double>(
           stream: player.speedStream,
           builder: (context, snapshot) => IconButton(
-            icon: Text("${snapshot.data?.toStringAsFixed(1)}x",
-                style: const TextStyle(fontWeight: FontWeight.bold)),
+            icon: Text("${snapshot.data?.toStringAsFixed(1)}x", style: const TextStyle(fontWeight: FontWeight.bold)),
             onPressed: () {
               showSliderDialog(
                 context: context,
