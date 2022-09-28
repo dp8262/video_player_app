@@ -17,25 +17,24 @@ class _TabBarListScreenState extends State<TabBarListScreen> {
       initialIndex: 1,
       length: 4,
       child: Scaffold(
-        backgroundColor: AllColors.whiteColor,
-        appBar: AppBar(
-          backgroundColor: AllColors.whiteColor,
+        backgroundColor: const Color(0xff1f1d2c),        appBar: AppBar(
+        backgroundColor: const Color(0xff1f1d2c),
           title: const Text(
             'Discover',
-            style: TextStyle(color: AllColors.blackColor, fontWeight: FontWeight.bold, fontSize: 25, fontFamily: FontFamily.poppins),
+            style: TextStyle(color: AllColors.whiteColor, fontWeight: FontWeight.bold, fontSize: 25, fontFamily: FontFamily.poppins),
           ),
           actions: const [
             Padding(
               padding: EdgeInsets.only(right: 30),
               child: Icon(
                 Icons.search_rounded,
-                color: AllColors.blackColor,
+                color: AllColors.whiteColor,
                 size: 25,
               ),
             )
           ],
           bottom: const TabBar(
-            labelColor: AllColors.blackColor,
+            labelColor: AllColors.whiteColor,
             unselectedLabelColor: AllColors.greyLightColor,
             labelStyle: TextStyle(
               fontSize: 14,
@@ -66,10 +65,10 @@ class _TabBarListScreenState extends State<TabBarListScreen> {
         ),
         bottomNavigationBar: Container(
           decoration: BoxDecoration(
-              color: AllColors.whiteColor,
+              color: const Color(0xff1f1d2c),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.7),
+                  color: Colors.grey.withOpacity(0.7),
                   spreadRadius: 5,
                   blurRadius: 7,
                   offset: const Offset(0, 10), // changes position of shadow
@@ -83,7 +82,7 @@ class _TabBarListScreenState extends State<TabBarListScreen> {
             indicatorSize: TabBarIndicatorSize.tab,
             labelPadding: const EdgeInsets.all(0),
             indicatorPadding: const EdgeInsets.all(7),
-            labelColor: AllColors.blackColor,
+            labelColor: AllColors.whiteColor,
             labelStyle: const TextStyle(
               fontSize: 12,
             ),

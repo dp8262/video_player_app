@@ -32,27 +32,6 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xff1f1d2c),
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: const Color(0xff1f1d2c),
-        title: const Padding(
-          padding: EdgeInsets.all(10.0),
-          child: Text(
-            "Discover",
-            style: TextStyle(fontFamily: FontFamily.raleway, color: AllColors.whiteColor, fontSize: 25, fontWeight: FontWeight.bold),
-          ),
-        ),
-        actions: const [
-          Padding(
-            padding: EdgeInsets.all(10.0),
-            child: Icon(
-              Icons.search_rounded,
-              color: Colors.grey,
-              size: 35,
-            ),
-          ),
-        ],
-      ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

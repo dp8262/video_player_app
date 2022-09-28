@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:video_player_app/audio_player/now_playing_screen.dart';
